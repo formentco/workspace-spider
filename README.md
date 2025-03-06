@@ -1,31 +1,29 @@
 # workspace-spider
 
-[![Release](https://img.shields.io/github/v/release/chrisrolling/workspace-spider)](https://img.shields.io/github/v/release/chrisrolling/workspace-spider)
-[![Build status](https://img.shields.io/github/actions/workflow/status/chrisrolling/workspace-spider/main.yml?branch=main)](https://github.com/chrisrolling/workspace-spider/actions/workflows/main.yml?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/chrisrolling/workspace-spider/branch/main/graph/badge.svg)](https://codecov.io/gh/chrisrolling/workspace-spider)
-[![Commit activity](https://img.shields.io/github/commit-activity/m/chrisrolling/workspace-spider)](https://img.shields.io/github/commit-activity/m/chrisrolling/workspace-spider)
-[![License](https://img.shields.io/github/license/chrisrolling/workspace-spider)](https://img.shields.io/github/license/chrisrolling/workspace-spider)
-
 Workspace Spider performs a discovery of key artefacts and information in the google environment
 
-- **Github repository**: <https://github.com/chrisrolling/workspace-spider/>
-- **Documentation** <https://chrisrolling.github.io/workspace-spider/>
+Currently it scans Confluence and Jira.
 
-## Getting started with your project
+- **Github repository**: <https://github.com/formentco/workspace-spider/>
 
-### 1. Create a New Repository
 
-First, create a repository on GitHub with the same name as this project, and then run the following commands:
+## Running the project
+
+### 1. Setup dependencies
+Your machine requires the following dependencies:
+
+1. [Make](https://www.gnu.org/software/make/)
+2. [UV](https://github.com/astral-sh/uv/releases)
+ 
+
+### 2. Clone the repo
 
 ```bash
-git init -b main
-git add .
-git commit -m "init commit"
-git remote add origin git@github.com:chrisrolling/workspace-spider.git
-git push -u origin main
+git clone https://github.com/formentco/workspace-spider.git
 ```
 
-### 2. Set Up Your Development Environment
+
+### 2. Set Up Your Environment
 
 Then, install the environment and the pre-commit hooks with
 
@@ -33,37 +31,43 @@ Then, install the environment and the pre-commit hooks with
 make install
 ```
 
-This will also generate your `uv.lock` file
+### 3. Atlassian
 
-### 3. Run the pre-commit hooks
+Obtain a API key from your profile in Atlassian
 
-Initially, the CI/CD pipeline might be failing due to formatting issues. To resolve those run:
+https://id.atlassian.com/manage-profile/security/api-tokens
+
+You can use separate API tokens for different processes if you wish, however, each token has access to all products and all your access by default.
+
+Once you are finished with the process: please remove the token from Atlassian! 
+
+### 4. Env File
+
+create an env file by copying the sample env to .env in the project root
 
 ```bash
-uv run pre-commit run -a
+cp sample_env .env
 ```
 
-### 4. Commit the changes
+Update the 
+CONFLUENCE_BASE_URL= with your subdomain
+USERNAME= with the email address 
+API_TOKEN=with your token for confluence
+JIRA_BASE_URL= with your subdomain 
+JIRA_API_TOKEN=with your token for JIRA
+JIRA_USERNAME=with your email address
 
-Lastly, commit the changes made by the two steps above to your repository.
+
+### 5. Run Confluence
+If you wish to scan confluence, run the confluence command
 
 ```bash
-git add .
-git commit -m 'Fix formatting issues'
-git push origin main
+make run-confluence
 ```
 
-You are now ready to start development on your project!
-The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
+### 6. Run Jira
+If you wish to scan jira, run the jira command
 
-To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
-For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
-To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
-
-## Releasing a new version
-
-
-
----
-
-Repository initiated with [fpgmaas/cookiecutter-uv](https://github.com/fpgmaas/cookiecutter-uv).
+```bash
+make run-jira
+```
