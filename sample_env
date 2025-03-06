@@ -1,0 +1,7 @@
+CONFLUENCE_BASE_URL=https://<domain>.atlassian.net/wiki
+API_TOKEN=<key from atlassian>
+USERNAME=something@domain.co.uk
+JIRA_BASE_URL=https://<domain>.atlassian.net
+JIRA_API_TOKEN=<key from atlassian>
+JIRA_USERNAME=something@domain.co.uk
+OUTPUT_DIR=data
